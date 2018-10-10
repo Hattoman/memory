@@ -14,3 +14,31 @@ genom att anropa en funktion flera gånger. */
 skriven i markup språket Markdown. Bör innehålla kortare information
 om vad som ligger i respektive fil samt vilka kommandon som ska
 köras för att starta utvecklingsserver samt hur man bygger en build. */
+
+const memory = () => {
+  const rows = 4;
+  const columns = 4;
+
+  // container id
+  const containerId = 'memory';
+
+  // container element
+  const container = document.getElementById(containerId);
+  // template element
+  const template = document.querySelector('#memory template');
+  // FIXME: ska skrivas om senare.
+  // innehållet i template
+  const templateDiv = template.content.firstElementChild;
+  // endast .memory div
+  const div = document.importNode(templateDiv, false);
+  // lägg till div i container
+  container.appendChild(div);
+  // loop för att skriva ut brickor
+  for (let i = 0; i < rows * columns; i++) {
+    // lägger in bricka
+    const brick = document.importNode(templateDiv.firstElementChild, true);
+    div.appendChild(brick);
+  }
+};
+
+export default memory;
