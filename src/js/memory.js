@@ -12,15 +12,7 @@ skriven i markup språket Markdown. Bör innehålla kortare information
 om vad som ligger i respektive fil samt vilka kommandon som ska
 köras för att starta utvecklingsserver samt hur man bygger en build. */
 
-const memory = () => {
-  const rows = 4;
-  const columns = 4;
-
-  // namn på bilderna för baksidorna.
-  const tiles = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
-  // container id
-  const containerId = 'memory';
-
+const renderMemory = (containerId, bricks) => {
   // container element
   const container = document.getElementById(containerId);
   // template element
@@ -35,7 +27,7 @@ const memory = () => {
 
   // FIXME: skriv om senare
   // loop för att skriva ut brickor
-  for (let i = 0; i < tiles.length; i++) {
+  for (let i = 0; i < brick.tiles.length; i++) {
     // FIXME: bör skrivas om senare
     // event hanterare funktion
     const handleClick = event => {
@@ -46,7 +38,7 @@ const memory = () => {
       } else {
         img = event.target;
       }
-      const path = `images/${tiles[i]}.png`;
+      const path = `images/${bricks.tiles[i]}.png`;
       img.setAttribute('src', path);
     };
     // lägger in bricka
@@ -56,6 +48,23 @@ const memory = () => {
     brick.addEventListener('click', handleClick);
     div.appendChild(brick);
   }
+};
+
+const memory = () => {
+  // render egenskaper
+  const renderOptions = {
+    rows: 4,
+    columns: 4
+  };
+
+  // brick logik
+  const bricks = {
+    tiles: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8]
+  };
+
+  // container id
+  const containerId = 'memory';
+  renderMemory(containerId, bricks);
 };
 
 export default memory;
