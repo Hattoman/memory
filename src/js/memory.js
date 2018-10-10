@@ -1,5 +1,3 @@
-// TODO: 1. Design för memory-spel.
-// TODO: 2. Bild på varje brickas baksida.
 // TODO: 3. Bild på varje brickas framsida.
 // TODO: 4. Skriva ut 4x4 brickor.
 // TODO: 5. Rutnät, 4 rader, 4 per rad.
