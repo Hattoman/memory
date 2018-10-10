@@ -1,7 +1,4 @@
-// TODO: 3. Bild på varje brickas framsida.
-// TODO: 4. Skriva ut 4x4 brickor.
-// TODO: 5. Rutnät, 4 rader, 4 per rad.
-// TODO: 6. Tryck på en bricka för att vända den.
+// TODO: 5.Brickorna måste blandas
 // TODO: 7. 2 lika brickor tas bort.
 // TODO: 8. 2 olika brickor vänds tillbaka.
 // TODO: 9. När 2 brickor vänds ska antalet försök uppdateras.
@@ -19,6 +16,8 @@ const memory = () => {
   const rows = 4;
   const columns = 4;
 
+  // namn på bilderna för baksidorna.
+  const tiles = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
   // container id
   const containerId = 'memory';
 
@@ -33,10 +32,28 @@ const memory = () => {
   const div = document.importNode(templateDiv, false);
   // lägg till div i container
   container.appendChild(div);
+
+  // FIXME: skriv om senare
   // loop för att skriva ut brickor
-  for (let i = 0; i < rows * columns; i++) {
+  for (let i = 0; i < tiles.length; i++) {
+    // FIXME: bör skrivas om senare
+    // event hanterare funktion
+    const handleClick = event => {
+      // FIXME: skriv om senare
+      let img;
+      if (event.target.tagName === 'DIV') {
+        img = event.target.firstElementChild;
+      } else {
+        img = event.target;
+      }
+      const path = `images/${tiles[i]}.png`;
+      img.setAttribute('src', path);
+    };
     // lägger in bricka
     const brick = document.importNode(templateDiv.firstElementChild, true);
+    // FIXME: bör skrivas om senare
+    // event lyssnare för brick
+    brick.addEventListener('click', handleClick);
     div.appendChild(brick);
   }
 };
