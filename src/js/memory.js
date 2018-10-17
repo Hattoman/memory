@@ -23,7 +23,11 @@ const turnBrick = (bricks, img) => {
     bricks.second = img;
 
     // kolla om vi har ett par
-    if (bricks.first.getAttribute('src') === bricks.second.getAttribute('src')) {
+    if (
+      bricks.first.getAttribute('src') === bricks.second.getAttribute('src') &&
+      bricks.first.parentElement.getAttribute('data-index-number') !==
+        bricks.second.parentElement.getAttribute('data-index-number')
+    ) {
       // FIXME: skriv om sen
       // göm brickor
       const removeBrick = () => {
@@ -89,6 +93,7 @@ const renderMemory = (containerId, bricks) => {
     // FIXME: bör skrivas om senare
     // event lyssnare för brick
     brick.addEventListener('click', handleClick);
+    brick.setAttribute('data-index-number', i);
     div.appendChild(brick);
   }
 };
