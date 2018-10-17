@@ -19,3 +19,7 @@ height: 60px;
   display: flex;
   flex-wrap: wrap;
 }
+
+.hidden {
+  visibility: hidden;
+}
