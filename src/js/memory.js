@@ -11,6 +11,10 @@ om vad som ligger i respektive fil samt vilka kommandon som ska
 köras för att starta utvecklingsserver samt hur man bygger en build. */
 
 const turnBrick = (bricks, img) => {
+  // FIXME: fixa sen
+  if (bricks.second !== null) {
+    return;
+  }
   // FIXME: fixa till sen
   // kolla om en brick redan är vänd
   if (bricks.first === null) {
@@ -42,7 +46,7 @@ const turnBrick = (bricks, img) => {
         bricks.first = null;
         bricks.second = null;
       };
-      window.setTimeout(turnBackBrick, 100);
+      window.setTimeout(turnBackBrick, 500);
     }
   }
 };
