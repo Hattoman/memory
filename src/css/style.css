@@ -1,7 +1,7 @@
 .brick {
   width: 100px;
   height: 100px;
-  background: #ffee58;
+  background: #68ec56;
   display: flex;  /*talar om att vi använder flexbox*/
   justify-content: center;  /*centrerar horizontalt*/
   align-items: center;  /*centrerar vertikalt*/
@@ -22,4 +22,12 @@ height: 60px;
 
 .hidden {
   visibility: hidden;
+}
+
+#header {
+  width: 100%; /*sätter full bredd */
+}
+
+#header h1 {
+text-align: center; /* centrerar text */
 }
