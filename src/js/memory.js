@@ -1,18 +1,19 @@
 import getMixedNumberArray from './helpers';
 
-// TODO: 5.Brickorna måste blandas
-// TODO: 9. När 2 brickor vänds ska antalet försök uppdateras.
-// TODO: 10. Antalet försök och antalet par ska visas för användaren.
-// TODO: 11. Antalet sekunder spelat ska också visas.
-// TODO: 12. När spelet är slut ska tiden stoppas.
-/* TODO: 13. Det ska enkelt gå att ladda in flera spel,
-genom att anropa en funktion flera gånger. */
-/* TODO: 14. En enklare dokumentation i README.md som ska vara
-skriven i markup språket Markdown. Bör innehålla kortare information
-om vad som ligger i respektive fil samt vilka kommandon som ska
-köras för att starta utvecklingsserver samt hur man bygger en build. */
+const timer = score => {
+  const timeEL = document.getElementById('time');
+  // FIXME: fixa sen
+  const t = window.setInterval(() => {
+    const currentTime = Date.now();
+    score.time = Math.round((currentTime - score.startTime) / 1000);
+    timeEL.textContent = score.time;
+  }, 1000);
+  return t;
+};
 
-const turnBrick = (bricks, img) => {
+const turnBrick = (bricks, img, score, renderOptions, t) => {
+  const triesEl = document.getElementById('tries');
+  const pairsEl = document.getElementById('pairs');
   // FIXME: fixa sen
   if (bricks.second !== null) {
     return;
@@ -35,9 +36,20 @@ const turnBrick = (bricks, img) => {
       const removeBrick = () => {
         bricks.first.parentElement.classList.add('hidden');
         bricks.second.parentElement.classList.add('hidden');
+        // FIXME: fixa sen
+        score.pairs += 1;
+        score.tries += 1;
+        pairsEl.textContent = score.pairs;
+        triesEl.textCOntent = score.tries;
         // reset brick logik
         bricks.first = null;
         bricks.second = null;
+        if ((renderOptions.rows * renderOptions.columns) / 2 === score.pairs) {
+          const msgEl = document.getElementById('win-message');
+          clearInterval(t);
+          msgEl.textContent = `Grattis! Du vann efter ${score.tries} försök och
+          fick ${score.pairs} par på ${score.time} sekunder.`;
+        }
       };
       window.setTimeout(removeBrick, 100);
     } else {
@@ -48,6 +60,9 @@ const turnBrick = (bricks, img) => {
         // vänd tillbaka brickor
         bricks.first.setAttribute('src', path);
         bricks.second.setAttribute('src', path);
+        // FIXME: fixa sen
+        score.tries += 1;
+        triesEl.textContent = score.tries;
         // reset brick logik
         bricks.first = null;
         bricks.second = null;
@@ -57,18 +72,22 @@ const turnBrick = (bricks, img) => {
   }
 };
 
-const renderMemory = (containerId, bricks) => {
+const renderMemory = (containerId, bricks, score, renderOptions) => {
   // container element
   const container = document.getElementById(containerId);
   // template element
   const template = document.querySelector('#memory template');
   // FIXME: ska skrivas om senare.
   // innehållet i template
-  const templateDiv = template.content.firstElementChild;
+  const templateDiv = template.content.querySelector('.memory');
+  const headerDiv = template.content.getElementById('header');
   // endast .memory div
   const div = document.importNode(templateDiv, false);
+  const header = document.importNode(headerDiv, true);
   // lägg till div i container
+  div.appendChild(header);
   container.appendChild(div);
+  const t = timer(score);
 
   // FIXME: skriv om senare
   // loop för att skriva ut brickor
@@ -87,7 +106,7 @@ const renderMemory = (containerId, bricks) => {
       img.setAttribute('src', path);
 
       // vänd bricka
-      turnBrick(bricks, img);
+      turnBrick(bricks, img, score, renderOptions, t);
     };
 
     // lägger in bricka
@@ -114,9 +133,16 @@ const memory = () => {
     tiles: getMixedNumberArray((renderOptions.rows * renderOptions.columns) / 2)
   };
 
+  const score = {
+    tries: 0,
+    pairs: 0,
+    time: 0,
+    startTime: Date.now()
+  };
+
   // container id
   const containerId = 'memory';
-  renderMemory(containerId, bricks);
+  renderMemory(containerId, bricks, score, renderOptions);
 };
 
 export default memory;
